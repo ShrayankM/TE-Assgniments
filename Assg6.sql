@@ -1,20 +1,18 @@
-declare
-cursor cur is select * from N_RollCall;
-roll integer;
-sname varchar(20);
-cell number(10);
+declare 
+	cursor c is select * from old_table;
+	roll_V Number;
+	name_v varchar2(20);
+	gender_v char(5);
 begin
-open cur;
-loop
-fetch cur into roll,sname,cell;
-for i in (select * from O_RollCall) loop
-if(roll = i.rollno) then
-dbms_output.put_line(roll || 'is already present');
-else
-insert into O_RollCall values(roll,sname,cell);
-end if;
-end loop;
-exit when cur%notfound;
-end loop;
-close cur;
-end;
+	
+	open c;
+	fetch c into roll_v,name_v,gender_v;
+	for i in (select * from new_table) loop
+		if(roll_v = i.ROLL and name_v = i.Name) then 
+			dbms_output.put_line('Entry Found');
+		else
+			insert into old_table values(i.ROLL,i.NAME,i.GENDER);
+		end if;
+	exit when c%notfound;
+	end loop;
+	end;
