@@ -27,31 +27,29 @@ india.drawcoastlines()
 india.readshapefile('F:\SDLProjects\Shapefile\India','areas')
 #for i in india.areas:
 #    print(i)
-#for i in india.areas_info:
-#   print(i)
+for i in india.areas_info:
+  print(i)
 patches = []
 df_p = pd.read_csv("Population_new.csv")
 df_p_stateN = df_p.iloc[:,0]
 df_p_2013N = df_p.iloc[:,1]
 
-df_p_2013N = pd.DataFrame(df_p_2013N)
+
 
 df_poly = pd.DataFrame({
         'shapes': [Polygon(np.array(shape), True) for shape in india.areas],
         'area': [area['NAME_1'] for area in india.areas_info]
     })
+df_list = list(df_p_stateN)
+df_list.append('Telangana')
+df_list
+
 for info,shape in zip(india.areas_info,india.areas):
-    if info['NAME_1']=='Maharashtra':
-        patches.append(Polygon(np.array(shape),True))
-red = Color("red",saturation = 0.5)
-ax.add_collection(PatchCollection(patches, facecolor= red, edgecolor='k', linewidths=1., zorder=2))
+    for i in df_list:
+        if info['NAME_1']==i:
+            patches.append(Polygon(np.array(shape),True))
+            break
+ax.add_collection(PatchCollection(patches, facecolor='r', edgecolor='k', linewidths=1., zorder=2))
+
+
 plt.show()
-print(df_poly)
-
-
-
-
-
-
-
-
