@@ -14,6 +14,7 @@ df_p_2015_list = []
 df_p_2016_list = []
 df_p_2017_list = []
 output = dict()
+count = 0
 
 fig, ax = plt.subplots(figsize=(10,20))
 india = Basemap(resolution='i', # c, l, i, h, f or None
@@ -27,12 +28,21 @@ india.drawcoastlines()
 india.readshapefile('F:\SDLProjects\Shapefile\India','areas')
 #for i in india.areas:
 #    print(i)
-for i in india.areas_info:
-  print(i)
+#for i in india.areas_info:
+#  print(i)
 patches = []
+color_patch = []
 df_p = pd.read_csv("Population_new.csv")
+
 df_p_stateN = df_p.iloc[:,0]
+
 df_p_2013N = df_p.iloc[:,1]
+
+df_color = pd.read_csv("ColorN.csv")
+df_colorC = df_color.iloc[:,0]
+df_codeL = np.array(df_colorC)
+df_newL = []
+
 
 
 
@@ -41,15 +51,16 @@ df_poly = pd.DataFrame({
         'area': [area['NAME_1'] for area in india.areas_info]
     })
 df_list = list(df_p_stateN)
-df_list.append('Telangana')
-df_list
-
+#df_list.append('Telangana')
+axes = plt.gca()
 for info,shape in zip(india.areas_info,india.areas):
     for i in df_list:
         if info['NAME_1']==i:
             patches.append(Polygon(np.array(shape),True))
             break
-ax.add_collection(PatchCollection(patches, facecolor='r', edgecolor='k', linewidths=1., zorder=2))
+p = PatchCollection(patches, edgecolor='k', linewidths=1., zorder=2)
+p.set_facecolor(df_codeL)
+ax.add_collection(p)
 
 
 plt.show()
