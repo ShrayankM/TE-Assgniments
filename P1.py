@@ -43,24 +43,23 @@ df_colorC = df_color.iloc[:,0]
 df_codeL = np.array(df_colorC)
 df_newL = []
 
-
+df_states = pd.read_csv("B2c.csv")
 
 
 df_poly = pd.DataFrame({
         'shapes': [Polygon(np.array(shape), True) for shape in india.areas],
-        'area': [area['NAME_1'] for area in india.areas_info]
+        'State': [area['NAME_1'] for area in india.areas_info]
     })
-df_list = list(df_p_stateN)
-#df_list.append('Telangana')
-axes = plt.gca()
-for info,shape in zip(india.areas_info,india.areas):
-    for i in df_list:
-        if info['NAME_1']==i:
-            patches.append(Polygon(np.array(shape),True))
-            break
-p = PatchCollection(patches, edgecolor='k', linewidths=1., zorder=2)
-p.set_facecolor(df_codeL)
-ax.add_collection(p)
+df_poly =df_poly.merge(df_states,on='State',how='left')
+cmap = plt.get_cmap('Oranges')
+pc=PatchCollection(df_poly.shapes,zorder=2)
+norm = Normalize()
 
+pc.set_facecolor(cmap(norm(df_poly['2013'].fillna(0).values)))
+ax.add_collection(pc)
+
+mapper = matplotlib.cm.ScalarMappable(norm=norm , cmap=cmap)
+mapper.set_array(df_poly['2013'])
+plt.colorbar(mapper,shrink=0.4)
 
 plt.show()
