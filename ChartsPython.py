@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import plotly.plotly as py
-import plotly.figure_factory as ff
+#import plotly.plotly as py
+#import plotly.figure_factory as ff
 import matplotlib.pyplot as plt; plt.rcdefaults()
 
 
@@ -20,6 +20,7 @@ sgpa_list = list(df_sgpa)
 for element in sgpa_list:
     sgpa_f.append(element.strip(','))
 sgpa_f = [temp.replace('--','0') for temp in sgpa_f]
+
 
 #for element in sgpa_f:
 #    sgpa_float.append(float(element))
@@ -69,6 +70,7 @@ def CalculateClass(marks_array = np.array([0,0])):
 
 
 subject_index = [8,16,24,32,40,81,95,103,111,119]
+subject_names = ['A','B','C','D','E','F','G','H','I','J']
 listl = [0,1,2,3,4,5,6,7,8,9]
 ind = np.array(listl)
 width = 0.1
@@ -84,8 +86,9 @@ avg_list = []
 len_list = 0
 sum_list = 0
 
-for i in subject_index:
+for i,j in  zip(subject_index,subject_names):
     subject_marks=df.iloc[:,i]
+    subject_marks.name=j
     marks_list= list(subject_marks)
     
     marks_list = ['FF' if x!=x else x for x in marks_list]
@@ -115,7 +118,7 @@ rects5 = ax.bar(ind+width*4,fa_lenL,width,color='red')
 
 ax.set_ylabel('Student Count')
 ax.set_xticks(ind+width)
-#ax.set_xticklabels(subjects)
+ax.set_xticklabels(subjects)
   
     
 plt.show() 
@@ -128,16 +131,11 @@ for i in range(10):
     
     print(subjects[i],' | ',max_list[i],'| ',min_list[i],'|  ',avg_list[i],' |') 
     
-  
+    
+    
+#df2 = pd.DataFrame([[238,'S150234440','XYZ','AB','DF',12,12,12,12,12,'aa','aa',0,'a',0,0,5,80,'PASS',1]],columns=list(210258_Tot%  210258_crd 210258_Grd 210258_Grd Pts 210258_Crd pts   SGPAEarn_CreditResultClass ))
+#df.append(df2)
 
-    
-
-    
-    
-   
-    
-    
-
-    
-    
-    
+roll_df = df.iloc[:,1]
+roll_marks = df.iloc[:,5]
+df_merge = pd.DataFrame({'210241_TH':df.iloc[:,5],'seat no':df.iloc[:,1],})
