@@ -78,15 +78,25 @@ h_s_lenL = []
 s_lenL = []
 fa_lenL = []
 subjects = []
+max_list = []
+min_list = []
+avg_list = []
+len_list = 0
+sum_list = 0
 
 for i in subject_index:
     subject_marks=df.iloc[:,i]
     marks_list= list(subject_marks)
+    
     marks_list = ['FF' if x!=x else x for x in marks_list]
     marks_list = [tempV.replace('FF','0') for tempV in marks_list]
     marks_array=np.array(marks_list,dtype=np.int)
+    max_list.append(max(marks_array))
+    min_list.append(min(marks_array))
+    sum_list = sum(marks_array)
+    len_list = len(marks_array)
+    avg_list.append(sum_list/len_list)
     returned_array = CalculateClass(marks_array)
-    
     d_lenL.append(len(marks_array[returned_array[0]]))
     f_lenL.append(len(marks_array[returned_array[1]]))
     h_s_lenL.append(len(marks_array[returned_array[2]]))
@@ -105,10 +115,19 @@ rects5 = ax.bar(ind+width*4,fa_lenL,width,color='red')
 
 ax.set_ylabel('Student Count')
 ax.set_xticks(ind+width)
-ax.set_xticklabels(subjects)
+#ax.set_xticklabels(subjects)
   
     
 plt.show() 
+
+
+
+print("Subjects" , "    | MAX","| MIN","| AVG             |")
+print("--------------------------------------------")
+for i in range(10):
+    
+    print(subjects[i],' | ',max_list[i],'| ',min_list[i],'|  ',avg_list[i],' |') 
+    
   
 
     
