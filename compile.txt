@@ -1,0 +1,44 @@
+jackson@linux-ubuntu:~/Jni$ javac add.java
+jackson@linux-ubuntu:~/Jni$ javah -jni add
+jackson@linux-ubuntu:~/Jni$ gcc -I/usr/lib/jvm/java-8-oracle/include   -I/usr/lib/jvm/java-8-oracle/include/linux -o libadd.so -shared add.c
+jackson@linux-ubuntu:~/Jni$ java -Djava.library.path=. add
+Addition is 30
+Subraction is 10
+Multiplication is 200
+Division is 2
+jackson@linux-ubuntu:~/Jni$ 
+****************************************
+-I/usr/lib/jvm/java-8-oracle/include
+-I/usr/lib/jvm/java-8-oracle/include/linux 
+jni_md.h jni.h directories
+******************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
